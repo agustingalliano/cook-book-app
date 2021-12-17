@@ -1,5 +1,10 @@
+import 'package:cook_book/src/connection/server_controller.dart';
+import 'package:cook_book/src/screens/home_page.dart';
 import 'package:cook_book/src/screens/login_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modulo1_fake_backend/user.dart';
+
+ServerController _serverController = ServerController();
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -9,11 +14,26 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      initialRoute: '/',
       theme: ThemeData(
-          brightness: Brightness.light,
-          primaryColor: Colors.cyan[300],
+        brightness: Brightness.light,
+        primaryColor: Colors.cyan[300],
       ),
-      home: const LoginPage(),
+      onGenerateRoute: (RouteSettings settings) {
+        return MaterialPageRoute(builder: (BuildContext context) {
+          switch (settings.name) {
+            case "/":
+              return LoginPage(_serverController, context);
+            case "/home":
+              User userLogged = settings.arguments as User;
+              return HomePage(
+                loggedUser: userLogged,
+              );
+            default:
+              return LoginPage(_serverController, context);
+          }
+        });
+      },
     );
   }
 }
