@@ -12,4 +12,8 @@ class ServerController {
     return await server.backendLogin(userName, password);
   }
 
+  Future<bool> addUser(User user) async{
+    return await server.addUser(user);
+  }
+
 }

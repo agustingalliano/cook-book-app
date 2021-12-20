@@ -1,6 +1,7 @@
 import 'package:cook_book/src/connection/server_controller.dart';
 import 'package:cook_book/src/screens/home_page.dart';
 import 'package:cook_book/src/screens/login_page.dart';
+import 'package:cook_book/src/screens/register_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modulo1_fake_backend/user.dart';
 
@@ -29,6 +30,8 @@ class MyApp extends StatelessWidget {
               return HomePage(
                 loggedUser: userLogged,
               );
+            case "/register":
+              return RegisterPage(_serverController, context);
             default:
               return LoginPage(_serverController, context);
           }
