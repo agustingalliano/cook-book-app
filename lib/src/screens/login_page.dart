@@ -63,7 +63,7 @@ class LoginPageState extends State<LoginPage> {
                                 validator: (value) {
                                   if(value!=null){
                                     if(value.isEmpty){
-                                      return "Este campo es obligaotio";
+                                      return "This field is required";
                                     }
                                   }
                                 },
@@ -80,7 +80,7 @@ class LoginPageState extends State<LoginPage> {
                                 validator: (value) {
                                   if(value!=null){
                                     if(value.isEmpty){
-                                      return "Este campo es obligaotio";
+                                      return "This field is required";
                                     }
                                   }
                                 },
@@ -96,7 +96,7 @@ class LoginPageState extends State<LoginPage> {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      const Text("Iniciar Seseion"),
+                                      const Text("Sign in"),
                                       if (_loading)
                                         Container(
                                           height: 20,
@@ -125,7 +125,7 @@ class LoginPageState extends State<LoginPage> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   const Text(
-                                    '¿No estas registrado?',
+                                    'Not registered??',
                                   ),
                                   TextButton(
                                     onPressed: () {
@@ -133,7 +133,7 @@ class LoginPageState extends State<LoginPage> {
                                         '/register',
                                       );
                                     },
-                                    child: const Text("Registrarse"),
+                                    child: const Text("Sign up"),
                                   )
                                 ],
                               )
@@ -161,7 +161,7 @@ class LoginPageState extends State<LoginPage> {
           Navigator.of(context).pushReplacementNamed("/home", arguments: user);
         } else {
           setState(() {
-            errorMessage = "Usuario o contrasaeña incorrecto";
+            errorMessage = "Incorrect user or password";
             _loading = false;
           });
         }

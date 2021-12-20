@@ -20,7 +20,6 @@ class RegisterPage extends StatefulWidget {
 class RegisterPageState extends State<RegisterPage> {
   bool _loading = false;
   GlobalKey<FormState> _formkey = GlobalKey<FormState>();
-  GlobalKey<ScaffoldState> _scaffkey = GlobalKey<ScaffoldState>();
   String userName = "";
   String password = "";
   Genrer genrer = Genrer.MALE;
@@ -71,7 +70,7 @@ class RegisterPageState extends State<RegisterPage> {
                                   validator: (value) {
                                     if(value!=null){
                                       if(value.isEmpty){
-                                        return "Este campo es obligaotio";
+                                        return "This field is required";
                                       }
                                     }
                                   },
@@ -98,7 +97,7 @@ class RegisterPageState extends State<RegisterPage> {
                                   validator: (value) {
                                     if(value!=null){
                                       if(value.isEmpty){
-                                        return "Este campo es obligaotio";
+                                        return "This field is required";
                                       }
                                     }
                                   },
@@ -109,7 +108,7 @@ class RegisterPageState extends State<RegisterPage> {
                                 ),
                                 Row(children: [
                                   Text(
-                                    "Genero",
+                                    "Gender",
                                     style:
                                     TextStyle(
                                         fontWeight: FontWeight.bold,
@@ -121,7 +120,7 @@ class RegisterPageState extends State<RegisterPage> {
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                         RadioListTile(
-                                          title: const Text("Masculino"),
+                                          title: const Text("Male"),
                                           value: Genrer.MALE,
                                           groupValue: genrer,
                                           onChanged: (Genrer? value) {
@@ -131,7 +130,7 @@ class RegisterPageState extends State<RegisterPage> {
                                           },
                                         ),
                                         RadioListTile(
-                                          title: const Text("Femenino"),
+                                          title: const Text("Female"),
                                           value: Genrer.FEMALE,
                                           groupValue: genrer,
                                           onChanged: (Genrer? value) {
@@ -153,7 +152,7 @@ class RegisterPageState extends State<RegisterPage> {
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: const [
-                                        Text("Registrar")
+                                        Text("Sign up")
                                       ],
                                     )
                                 ),
@@ -177,7 +176,7 @@ class RegisterPageState extends State<RegisterPage> {
       _formkey.currentState!.save();
 
       if (imageFile.path == "") {
-        showSnackBar(context, "Seleccione una imagen por favor", Colors.orange);
+        showSnackBar(context, "Select an image please", Colors.orange);
         return;
       }
 
@@ -189,8 +188,8 @@ class RegisterPageState extends State<RegisterPage> {
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
-                title: const Text("Informacion"),
-                content: const Text("Su usuario ha sido registrado exitosamente"),
+                title: const Text("Information"),
+                content: const Text("Your user has been successfully registered"),
                 actions: [
                   ElevatedButton(
                     onPressed: () {
@@ -204,7 +203,7 @@ class RegisterPageState extends State<RegisterPage> {
             }
           );
         } else {
-          showSnackBar(context, "No se pudo registrar", Colors.orange);
+          showSnackBar(context, "Failed to register", Colors.orange);
         }
     }
   }
