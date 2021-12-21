@@ -27,8 +27,9 @@ class MyApp extends StatelessWidget {
               return LoginPage(_serverController, context);
             case "/home":
               User userLogged = settings.arguments as User;
+              _serverController.loggedUser = userLogged;
               return HomePage(
-                loggedUser: userLogged,
+                serverController: _serverController,
               );
             case "/register":
               return RegisterPage(_serverController, context);
