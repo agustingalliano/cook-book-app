@@ -27,7 +27,56 @@ class MyDrawer extends StatelessWidget {
                     ),
                     fit: BoxFit.cover)),
             onDetailsPressed: () {
-
+              Navigator.pop(context);
+              Navigator.of(context).pushNamed("/register", arguments: serverController.loggedUser);
+            },
+          ),
+          ListTile(
+            title: const Text(
+              "My recipes",
+              style: TextStyle(
+                fontSize: 18
+              ),
+            ),
+            leading: const Icon(
+              Icons.book,
+              color: Colors.green,
+            ),
+            onTap: () {
+              Navigator.pop(context);
+              //Navigator.of(context).pushNamed("/userRecipes");
+            },
+          ),
+          ListTile(
+            title: const Text(
+              "My favourites",
+              style: TextStyle(
+                  fontSize: 18
+              ),
+            ),
+            leading: const Icon(
+              Icons.favorite,
+              color: Colors.red,
+            ),
+            onTap: () {
+              Navigator.pop(context);
+              //Navigator.of(context).pushNamed("/userRecipes");
+            },
+          ),
+          ListTile(
+            title: const Text(
+              "Log Out",
+              style: TextStyle(
+                  fontSize: 18
+              ),
+            ),
+            leading: const Icon(
+              Icons.logout,
+              color: Colors.black,
+            ),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.of(context).pushReplacementNamed("/");
             },
           )
         ],

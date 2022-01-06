@@ -7,7 +7,9 @@ class ServerController {
   late User loggedUser;
 
   void init (BuildContext context) {
-    server.generateData(context);
+    if(loggedUser==null) {
+      server.generateData(context);
+    }
   }
 
   Future<User> login (String userName, String password) async{
@@ -20,6 +22,11 @@ class ServerController {
 
   Future<List<Recipe>> getRecipesList() async {
     return await server.getRecipes();
+  }
+
+  Future<bool> updateUser(User user) async {
+    loggedUser = user;
+    return await server.updateUser(user);
   }
 
 }

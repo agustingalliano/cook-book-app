@@ -10,8 +10,9 @@ import 'package:image_picker/image_picker.dart';
 class RegisterPage extends StatefulWidget {
   ServerController serverController;
   BuildContext context;
+  User userToEdit;
 
-  RegisterPage(this.serverController, this.context, {Key? key}) : super(key: key);
+  RegisterPage(this.serverController, this.context, this.userToEdit, {Key? key}) : super(key: key);
 
   @override
   RegisterPageState createState() => RegisterPageState();
@@ -24,6 +25,7 @@ class RegisterPageState extends State<RegisterPage> {
   String password = "";
   Genrer genrer = Genrer.MALE;
   bool showPassword = false;
+  bool editingUser = false;
 
   File imageFile = File("");
 
@@ -62,6 +64,7 @@ class RegisterPageState extends State<RegisterPage> {
                             child: ListView(
                               children: [
                                 TextFormField(
+                                  initialValue: userName,
                                   decoration:
                                   const InputDecoration(labelText: "User: "),
                                   onSaved: (value) {
@@ -79,6 +82,7 @@ class RegisterPageState extends State<RegisterPage> {
                                   height: 40,
                                 ),
                                 TextFormField(
+                                  initialValue: password,
                                   decoration:
                                   InputDecoration(
                                       labelText: "Password: ",
@@ -148,11 +152,12 @@ class RegisterPageState extends State<RegisterPage> {
                                   height: 20,
                                 ),
                                 ElevatedButton(
-                                    onPressed: () => _register(context),
+                                    onPressed: () => _doProcess(context),
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
-                                      children: const [
-                                        Text("Sign up")
+                                      children: [
+                                        Text(
+                                            (editingUser) ? "Update" : "Sign up")
                                       ],
                                     )
                                 ),
@@ -171,7 +176,7 @@ class RegisterPageState extends State<RegisterPage> {
 
 
 
-  _register(BuildContext context) async {
+  _doProcess(BuildContext context) async {
     if(_formkey.currentState!.validate()) {
       _formkey.currentState!.save();
 
@@ -180,16 +185,24 @@ class RegisterPageState extends State<RegisterPage> {
         return;
       }
 
-      User userr = User(nickname: userName,password: password,genrer: genrer,photo: imageFile);
-      final state = await widget.serverController.addUser(userr);
+      User user = User(nickname: userName,password: password,genrer: genrer,photo: imageFile);
+      bool state;
 
+      if(editingUser) {
+        user.id = widget.serverController.loggedUser.id;
+        state = await widget.serverController.updateUser(user);
+      } else {
+        state = await widget.serverController.addUser(user);
+      }
+      final action = editingUser ? "updated" : "registered";
+      final action2 = editingUser ? "update" : "register";
       if(state) {
         showDialog(
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
                 title: const Text("Information"),
-                content: const Text("Your user has been successfully registered"),
+                content: Text("User has been successfully $action"),
                 actions: [
                   ElevatedButton(
                     onPressed: () {
@@ -203,7 +216,7 @@ class RegisterPageState extends State<RegisterPage> {
             }
           );
         } else {
-          showSnackBar(context, "Failed to register", Colors.orange);
+          showSnackBar(context, "Failed to $action2", Colors.orange);
         }
     }
   }
@@ -219,4 +232,21 @@ class RegisterPageState extends State<RegisterPage> {
         ),
     );
   }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    editingUser = widget.userToEdit != null;
+
+    if(editingUser) {
+      userName = widget.userToEdit.nickname;
+      password = widget.userToEdit.password;
+      imageFile = widget.userToEdit.photo;
+      genrer = widget.userToEdit.genrer;
+    }
+  }
+
+  void _update(BuildContext context) {}
+
 }
