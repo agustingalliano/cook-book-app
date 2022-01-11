@@ -1,4 +1,5 @@
 import 'package:cook_book/src/components/my_drawer.dart';
+import 'package:cook_book/src/components/recipe_widget.dart';
 import 'package:cook_book/src/connection/server_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modulo1_fake_backend/models.dart';
@@ -26,53 +27,18 @@ class _homeState extends State<HomePage> {
           if (snapshot.hasData) {
             final list = snapshot.data;
             return ListView.builder(
-                itemCount: list!.length,
-                itemBuilder: (context, index) {
-                  Recipe recipe = list[index];
-                  return Padding(
-                    padding: const EdgeInsets.fromLTRB(15, 20, 15, 0),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(35),
-                      child: Card(
-                        child: Container(
-                          height: 250,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: FileImage(recipe.photo),
-                              fit: BoxFit.cover,
-                            )
-                          ),
-                          alignment: Alignment.bottomLeft,
-                          child: Container(
-                            color: Colors.black.withOpacity(0.35),
-                            child: ListTile(
-                              title: Text(
-                                recipe.name,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                  fontSize: 16
-                                ),
-                              ),
-                              subtitle: Text(
-                                recipe.user.nickname,
-                                style: const TextStyle(
-                                    color: Colors.white),
-                              ),
-                              trailing: IconButton(
-                                icon: const Icon(Icons.favorite),
-                                onPressed: () {
-                                },
-                                iconSize: 32,
-                              ),
-                            ),
-                          ),
-                        )
-                      ),
-                    ),
-                  );
-                });
+              itemCount: list!.length,
+              itemBuilder: (BuildContext context, int index) {
+                Recipe recipe = list[index];
+                return RecipeWidget(
+                  recipe: recipe,
+                  serverController: widget.serverController,
+                  onChange: () {
+                    setState(() {});
+                  },
+                );
+              },
+            );
           } else {
             return const Center(
               child: CircularProgressIndicator(),

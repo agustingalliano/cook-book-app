@@ -7,9 +7,7 @@ class ServerController {
   late User loggedUser;
 
   void init (BuildContext context) {
-    if(loggedUser==null) {
       server.generateData(context);
-    }
   }
 
   Future<User> login (String userName, String password) async{
@@ -29,4 +27,19 @@ class ServerController {
     return await server.updateUser(user);
   }
 
+  Future<List<Recipe>> getFavoritesList() async {
+    return await server.getFavorites();
+  }
+
+  Future<Recipe> addFavorite(Recipe recipe) async{
+    return await server.addFavorite(recipe);
+  }
+
+  Future<bool> isFavorite(Recipe recipe) async {
+    return await server.isFavorite(recipe);
+  }
+
+  Future<bool> deleteFavorite(Recipe recipe) async{
+     return await server.deleteFavorite(recipe);
+  }
 }

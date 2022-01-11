@@ -1,6 +1,7 @@
 import 'package:cook_book/src/connection/server_controller.dart';
 import 'package:cook_book/src/screens/home_page.dart';
 import 'package:cook_book/src/screens/login_page.dart';
+import 'package:cook_book/src/screens/my_favorites_page.dart';
 import 'package:cook_book/src/screens/register_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modulo1_fake_backend/user.dart';
@@ -34,6 +35,8 @@ class MyApp extends StatelessWidget {
             case "/register":
               User loggedUser = settings.arguments as User;
               return RegisterPage(_serverController, context, loggedUser);
+            case "/favorites":
+              return FavoritePage(_serverController);
             default:
               return LoginPage(_serverController, context);
           }
