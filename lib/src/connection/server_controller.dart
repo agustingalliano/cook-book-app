@@ -42,4 +42,9 @@ class ServerController {
   Future<bool> deleteFavorite(Recipe recipe) async{
      return await server.deleteFavorite(recipe);
   }
+
+  Future<List<Recipe>> getUserRecipesList() async {
+    return await server.getUserRecipes(loggedUser);
+  }
+
 }

@@ -2,6 +2,7 @@ import 'package:cook_book/src/connection/server_controller.dart';
 import 'package:cook_book/src/screens/home_page.dart';
 import 'package:cook_book/src/screens/login_page.dart';
 import 'package:cook_book/src/screens/my_favorites_page.dart';
+import 'package:cook_book/src/screens/my_recipes_page.dart';
 import 'package:cook_book/src/screens/register_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modulo1_fake_backend/user.dart';
@@ -37,6 +38,8 @@ class MyApp extends StatelessWidget {
               return RegisterPage(_serverController, context, loggedUser);
             case "/favorites":
               return FavoritePage(_serverController);
+            case "/my_recipes":
+              return MyRecipesPage(_serverController);
             default:
               return LoginPage(_serverController, context);
           }
