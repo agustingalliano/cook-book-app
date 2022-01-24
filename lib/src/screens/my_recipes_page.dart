@@ -52,46 +52,49 @@ class MyRecipesPageState extends State<MyRecipesPage> {
                 itemCount: list.length,
                 itemBuilder: (context, index) {
                   Recipe recipe = list[index];
-                  return Padding(
-                    padding: const EdgeInsets.fromLTRB(15, 20, 15, 0),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(35),
-                      child: Card(
-                          child: Container(
-                            height: 250,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: FileImage(recipe.photo),
-                                  fit: BoxFit.cover,
-                                )
-                            ),
-                            alignment: Alignment.bottomLeft,
+                  return GestureDetector(
+                    onTap: () => _showDetails(context, recipe),
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(15, 20, 15, 0),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(35),
+                        child: Card(
                             child: Container(
-                              color: Colors.black.withOpacity(0.35),
-                              child: ListTile(
-                                title: Text(
-                                  recipe.name,
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                      fontSize: 16
+                              height: 250,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: FileImage(recipe.photo),
+                                    fit: BoxFit.cover,
+                                  )
+                              ),
+                              alignment: Alignment.bottomLeft,
+                              child: Container(
+                                color: Colors.black.withOpacity(0.35),
+                                child: ListTile(
+                                  title: Text(
+                                    recipe.name,
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                        fontSize: 16
+                                    ),
+                                  ),
+                                  subtitle: Text(
+                                    recipe.user.nickname,
+                                    style: const TextStyle(
+                                        color: Colors.white),
+                                  ),
+                                  trailing: IconButton(
+                                    icon: const Icon(Icons.favorite_border, color: Colors.red,),
+                                    onPressed: () {
+                                    },
+                                    iconSize: 32,
                                   ),
                                 ),
-                                subtitle: Text(
-                                  recipe.user.nickname,
-                                  style: const TextStyle(
-                                      color: Colors.white),
-                                ),
-                                trailing: IconButton(
-                                  icon: const Icon(Icons.favorite_border, color: Colors.red,),
-                                  onPressed: () {
-                                  },
-                                  iconSize: 32,
-                                ),
                               ),
-                            ),
-                          )
+                            )
+                        ),
                       ),
                     ),
                   );
@@ -105,4 +108,9 @@ class MyRecipesPageState extends State<MyRecipesPage> {
       ),
     );
   }
+
+  _showDetails(BuildContext context, Recipe recipe) {
+    Navigator.pushNamed(context, "/details", arguments: recipe);
+  }
+  
 }

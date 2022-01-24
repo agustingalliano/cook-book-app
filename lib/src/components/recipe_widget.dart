@@ -9,42 +9,45 @@ class RecipeWidget extends StatelessWidget {
   final ServerController serverController;
   final VoidCallback onChange;
 
-  RecipeWidget({required this.recipe, required this.serverController, required this.onChange, key})
+  const RecipeWidget({required this.recipe, required this.serverController, required this.onChange, key})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(15, 20, 15, 0),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(30),
-        child: Card(
-          child: Container(
-            height: 250,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: FileImage(recipe.photo),
-                fit: BoxFit.cover,
-              ),
-            ),
-            alignment: Alignment.bottomLeft,
+    return GestureDetector(
+      onTap: () => _showDetails(context),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(15, 20, 15, 0),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(30),
+          child: Card(
             child: Container(
-              color: Colors.black.withOpacity(0.35),
-              child: ListTile(
-                title: Text(
-                  recipe.name,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                    fontSize: 16,
+              height: 250,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: FileImage(recipe.photo),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              alignment: Alignment.bottomLeft,
+              child: Container(
+                color: Colors.black.withOpacity(0.35),
+                child: ListTile(
+                  title: Text(
+                    recipe.name,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
                   ),
+                  subtitle: Text(
+                    recipe.user.nickname,
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                  trailing: _getFavoriteWidget(),
                 ),
-                subtitle: Text(
-                  recipe.user.nickname,
-                  style: const TextStyle(color: Colors.white),
-                ),
-                trailing: _getFavoriteWidget(),
               ),
             ),
           ),
@@ -85,5 +88,9 @@ class RecipeWidget extends StatelessWidget {
         }
       },
     );
+  }
+
+  _showDetails(BuildContext context) {
+      Navigator.pushNamed(context, "/details", arguments: recipe);
   }
 }
